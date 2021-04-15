@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Shopping Cart 3</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="price">$%d</string>
+</resources>
