@@ -3,6 +3,7 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="remove_from_cart">Remove from cart</string>
     <string name="price">$%s</string>
+    <string name="item_count">%s items</string>
     <string name="my_cart">My Cart</string>
     <string name="orders">Orders</string>
     <string name="submit_order">Submit order</string>

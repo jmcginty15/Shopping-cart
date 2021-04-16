@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingcart3.R
 import com.example.shoppingcart3.data.entities.Item
+import com.example.shoppingcart3.data.entities.Order
 import com.example.shoppingcart3.databinding.CartFragmentBinding
 import com.example.shoppingcart3.ui.MainViewModel
 import com.example.shoppingcart3.ui.adapters.CartAdapter
@@ -49,6 +50,7 @@ class CartFragment : Fragment() {
 
         binding.emptyButton.setOnClickListener { mViewModel.clearCart() }
         binding.viewAllOrdersButton.setOnClickListener { viewOrders() }
+        binding.submitButton.setOnClickListener { submitOrder() }
     }
 
     private fun removeFromCart(item: Item, position: Int) {
@@ -58,5 +60,18 @@ class CartFragment : Fragment() {
     private fun viewOrders() {
         val navController = NavHostFragment.findNavController(this)
         navController.navigate(R.id.action_cart_fragment_to_order_fragment)
+    }
+
+    private fun submitOrder() {
+        if (mViewModel.cartList.value!!.isNotEmpty()) {
+            val order = Order(
+                totalPrice = mViewModel.currentTotalPrice,
+                tax = mViewModel.currentTax,
+                grandTotal = mViewModel.currentGrandTotal
+            )
+            mViewModel.addOrder(order)
+            viewOrders()
+            mViewModel.clearCart()
+        }
     }
 }

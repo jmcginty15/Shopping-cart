@@ -109,4 +109,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         currentGrandTotal = 0.0
         _cartList.value = arrayListOf()
     }
+
+    fun addOrder(order: Order) {
+        disposable.add(
+            orderRepository.addOrder(order).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onAddOrderSuccess, this::onOrderError)
+        )
+    }
+
+    private fun onAddOrderSuccess() {
+        getAllOrders()
+    }
 }
