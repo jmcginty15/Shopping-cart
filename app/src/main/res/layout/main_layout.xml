@@ -16,15 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/store_fragment" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/order"-->
-<!--        android:name="com.example.shoppingcart.ui.main.OrderFragment"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="@id/glv35"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <fragment
+        android:id="@+id/order"
+        android:name="com.example.shoppingcart3.ui.fragments.CartFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/glv50"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glv35"
@@ -32,4 +32,11 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glv50"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

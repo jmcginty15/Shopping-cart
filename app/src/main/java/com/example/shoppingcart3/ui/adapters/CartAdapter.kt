@@ -5,35 +5,36 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart3.R
 import com.example.shoppingcart3.data.entities.Item
-import com.example.shoppingcart3.databinding.StoreItemBinding
+import com.example.shoppingcart3.databinding.CartItemBinding
 
-class StoreAdapter(private val listener: ((item: Item) -> Unit)) :
-    RecyclerView.Adapter<StoreAdapter.StoreViewHolder>() {
+class CartAdapter(private val listener: ((item: Item, position: Int) -> Unit)) :
+    RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     private var itemList: List<Item> = listOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): StoreViewHolder =
-        StoreViewHolder(
-            StoreItemBinding.inflate(
+    ): CartViewHolder =
+        CartViewHolder(
+            CartItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
 
-    override fun onBindViewHolder(holder: StoreViewHolder, position: Int) = with(holder) {
-        val storeItem = itemList[position]
-        loadData(storeItem)
-        addToCartButton.setOnClickListener { listener(storeItem) }
-    }
+    override fun onBindViewHolder(holder: CartViewHolder, position: Int) =
+        with(holder) {
+            val cartItem = itemList[position]
+            loadData(cartItem)
+            removeFromCartButton.setOnClickListener { listener(cartItem, position) }
+        }
 
     override fun getItemCount(): Int = itemList.size
 
-    class StoreViewHolder(private val binding: StoreItemBinding) :
+    class CartViewHolder(private val binding: CartItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val addToCartButton = binding.addToCartButton
+        val removeFromCartButton = binding.removeFromCartButton
 
         fun loadData(storeItem: Item) = with(binding) {
             itemName.text = storeItem.name

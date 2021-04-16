@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Shopping Cart 3</string>
     <string name="add_to_cart">Add to cart</string>
-    <string name="price">$%d</string>
+    <string name="remove_from_cart">Remove from cart</string>
+    <string name="price">$%s</string>
+    <string name="my_cart">My Cart</string>
+    <string name="submit_order">Submit order</string>
+    <string name="total_price">Total price:</string>
+    <string name="tax">Tax:</string>
+    <string name="grand_total">Grand total:</string>
+    <string name="zero_dollars">$0.00</string>
 </resources>
