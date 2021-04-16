@@ -5,6 +5,8 @@
     <string name="price">$%s</string>
     <string name="my_cart">My Cart</string>
     <string name="submit_order">Submit order</string>
+    <string name="empty_cart">Empty cart</string>
+    <string name="view_all_orders">View all orders</string>
     <string name="total_price">Total price:</string>
     <string name="tax">Tax:</string>
     <string name="grand_total">Grand total:</string>

@@ -34,9 +34,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val cartList: LiveData<ArrayList<Item>>
         get() = _cartList
 
-    private val _cartList: MutableLiveData<ArrayList<Item>> by lazy {
-        MutableLiveData<ArrayList<Item>>()
-    }
+    private val _cartList = MutableLiveData<ArrayList<Item>>(arrayListOf())
 
     val orderList: LiveData<List<Order>>
         get() = _orderList
@@ -47,7 +45,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     var currentTotalPrice = 0.0
     var currentTax = 0.0
-    var currentGrandTotal = MutableLiveData(0.0)
+    var currentGrandTotal = 0.0
 
     private fun getAllItems() {
         disposable.add(
@@ -86,26 +84,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun addToCart(item: Item) {
-        var list = _cartList.value
-        if (list == null) {
-            list = arrayListOf(item)
-        } else {
-            list.add(item)
-        }
-        _cartList.value = list
-
         currentTotalPrice += item.price
         currentTax = currentTotalPrice * 0.075
-        currentGrandTotal.value = currentTotalPrice + currentTax
+        currentGrandTotal = currentTotalPrice + currentTax
+
+        val list = _cartList.value
+        list?.add(item)
+        _cartList.value = list!!
     }
 
     fun removeFromCart(item: Item, position: Int) {
-        var list = _cartList.value
-        list?.removeAt(position)
-        _cartList.value = list
-
         currentTotalPrice -= item.price
         currentTax = currentTotalPrice * 0.075
-        currentGrandTotal.value = currentTotalPrice + currentTax
+        currentGrandTotal = currentTotalPrice + currentTax
+
+        val list = _cartList.value
+        list?.removeAt(position)
+        _cartList.value = list!!
+    }
+
+    fun clearCart() {
+        currentTotalPrice = 0.0
+        currentTax = 0.0
+        currentGrandTotal = 0.0
+        _cartList.value = arrayListOf()
     }
 }

@@ -38,16 +38,15 @@ class CartFragment : Fragment() {
 
         mViewModel.cartList.observe(viewLifecycleOwner, { items ->
             cartAdapter.addData(items)
-        })
-
-        mViewModel.currentGrandTotal.observe(viewLifecycleOwner, { grandTotal ->
             binding.totalPrice.text =
                 resources.getString(R.string.price, "%.2f".format(mViewModel.currentTotalPrice))
             binding.tax.text =
                 resources.getString(R.string.price, "%.2f".format(mViewModel.currentTax))
             binding.grandTotal.text =
-                resources.getString(R.string.price, "%.2f".format(grandTotal))
+                resources.getString(R.string.price, "%.2f".format(mViewModel.currentGrandTotal))
         })
+
+        binding.emptyButton.setOnClickListener { mViewModel.clearCart() }
     }
 
     private fun removeFromCart(item: Item, position: Int) {
