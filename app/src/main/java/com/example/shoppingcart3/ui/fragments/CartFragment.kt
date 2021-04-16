@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingcart3.R
 import com.example.shoppingcart3.data.entities.Item
@@ -47,9 +48,15 @@ class CartFragment : Fragment() {
         })
 
         binding.emptyButton.setOnClickListener { mViewModel.clearCart() }
+        binding.viewAllOrdersButton.setOnClickListener { viewOrders() }
     }
 
     private fun removeFromCart(item: Item, position: Int) {
         mViewModel.removeFromCart(item, position)
+    }
+
+    private fun viewOrders() {
+        val navController = NavHostFragment.findNavController(this)
+        navController.navigate(R.id.action_cart_fragment_to_order_fragment)
     }
 }
