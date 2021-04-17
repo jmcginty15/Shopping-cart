@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart3.R
-import com.example.shoppingcart3.data.entities.Order
 import com.example.shoppingcart3.data.entities.OrderWithItems
 import com.example.shoppingcart3.databinding.OrderItemBinding
 
-class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+class OrderAdapter(private val listener: ((order: OrderWithItems) -> Unit)) :
+    RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     private var orderList: List<OrderWithItems> = listOf()
 
     override fun onCreateViewHolder(
@@ -27,12 +27,14 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
         with(holder) {
             val orderItem = orderList[position]
             loadData(orderItem)
+            detailsButton.setOnClickListener { listener(orderItem) }
         }
 
     override fun getItemCount(): Int = orderList.size
 
     class OrderViewHolder(private val binding: OrderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        val detailsButton = binding.orderDetails
 
         fun loadData(orderItem: OrderWithItems) = with(binding) {
             val countLabel = if (orderItem.items.size == 1) root.resources.getString(

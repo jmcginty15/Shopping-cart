@@ -21,6 +21,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var itemRepository: ItemRepository = ItemRepository(db.itemDao())
     private var orderRepository: OrderRepository = OrderRepository(db.orderDao(), db.relationDao())
     private var orderItemList = listOf<Item>()
+    lateinit var displayedOrder: OrderWithItems
 
     init {
         getAllItems()
@@ -138,5 +139,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun onAddOrderSuccess() {
         getAllOrders()
+    }
+
+    fun displayOrder(order: OrderWithItems) {
+        displayedOrder = order
     }
 }

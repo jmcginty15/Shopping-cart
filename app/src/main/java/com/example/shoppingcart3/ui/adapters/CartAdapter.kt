@@ -36,11 +36,11 @@ class CartAdapter(private val listener: ((item: Item, position: Int) -> Unit)) :
         RecyclerView.ViewHolder(binding.root) {
         val removeFromCartButton = binding.removeFromCartButton
 
-        fun loadData(storeItem: Item) = with(binding) {
-            itemName.text = storeItem.name
+        fun loadData(cartItem: Item) = with(binding) {
+            itemName.text = cartItem.name
             itemPrice.text =
-                root.resources.getString(R.string.price, "%.2f".format(storeItem.price))
-            itemDescription.text = storeItem.description
+                root.resources.getString(R.string.price, "%.2f".format(cartItem.price))
+            itemDescription.text = cartItem.description
         }
     }
 

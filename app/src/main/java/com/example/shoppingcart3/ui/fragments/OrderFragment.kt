@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingcart3.R
+import com.example.shoppingcart3.data.entities.OrderWithItems
 import com.example.shoppingcart3.databinding.OrderFragmentBinding
 import com.example.shoppingcart3.ui.MainViewModel
 import com.example.shoppingcart3.ui.adapters.OrderAdapter
@@ -17,7 +18,7 @@ class OrderFragment : Fragment() {
     private lateinit var binding: OrderFragmentBinding
     private val mViewModel: MainViewModel by activityViewModels()
     private val orderAdapter: OrderAdapter by lazy {
-        OrderAdapter()
+        OrderAdapter(this::showOrderDetails)
     }
 
     override fun onCreateView(
@@ -46,5 +47,11 @@ class OrderFragment : Fragment() {
     private fun viewCart() {
         val navController = NavHostFragment.findNavController(this)
         navController.navigate(R.id.order_fragment_pop)
+    }
+
+    private fun showOrderDetails(order: OrderWithItems) {
+        mViewModel.displayOrder(order)
+        val navController = NavHostFragment.findNavController(this)
+        navController.navigate(R.id.action_order_fragment_to_order_details_fragment)
     }
 }
