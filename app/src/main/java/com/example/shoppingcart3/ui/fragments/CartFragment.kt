@@ -67,9 +67,9 @@ class CartFragment : Fragment() {
             val order = Order(
                 totalPrice = mViewModel.currentTotalPrice,
                 tax = mViewModel.currentTax,
-                grandTotal = mViewModel.currentGrandTotal
+                grandTotal = mViewModel.currentGrandTotal,
             )
-            mViewModel.addOrder(order)
+            mViewModel.addOrder(order, mViewModel.cartList.value!!)
             viewOrders()
             mViewModel.clearCart()
         }

@@ -3,7 +3,8 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="remove_from_cart">Remove from cart</string>
     <string name="price">$%s</string>
-    <string name="item_count">%s items</string>
+    <string name="item_count_singular">%s item</string>
+    <string name="item_count_plural">%s items</string>
     <string name="my_cart">My Cart</string>
     <string name="orders">Orders</string>
     <string name="submit_order">Submit order</string>
@@ -14,4 +15,5 @@
     <string name="tax">Tax:</string>
     <string name="grand_total">Grand total:</string>
     <string name="zero_dollars">$0.00</string>
+    <string name="order_details">Order details</string>
 </resources>

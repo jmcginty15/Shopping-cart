@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shoppingcart3.data.database.StoreDatabase
 import com.example.shoppingcart3.data.entities.Item
 import com.example.shoppingcart3.data.entities.Order
+import com.example.shoppingcart3.data.entities.OrderItemRelation
+import com.example.shoppingcart3.data.entities.OrderWithItems
 import com.example.shoppingcart3.data.repositories.ItemRepository
 import com.example.shoppingcart3.data.repositories.OrderRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,7 +19,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val db = StoreDatabase.getDatabase(application)
     private val disposable = CompositeDisposable()
     private var itemRepository: ItemRepository = ItemRepository(db.itemDao())
-    private var orderRepository: OrderRepository = OrderRepository(db.orderDao())
+    private var orderRepository: OrderRepository = OrderRepository(db.orderDao(), db.relationDao())
+    private var orderItemList = listOf<Item>()
 
     init {
         getAllItems()
@@ -36,11 +39,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _cartList = MutableLiveData<ArrayList<Item>>(arrayListOf())
 
-    val orderList: LiveData<List<Order>>
+    val orderList: LiveData<List<OrderWithItems>>
         get() = _orderList
 
-    private val _orderList: MutableLiveData<List<Order>> by lazy {
-        MutableLiveData<List<Order>>()
+    private val _orderList: MutableLiveData<List<OrderWithItems>> by lazy {
+        MutableLiveData<List<OrderWithItems>>()
     }
 
     var currentTotalPrice = 0.0
@@ -75,7 +78,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    private fun onOrderSuccess(orders: List<Order>) {
+    private fun onOrderSuccess(orders: List<OrderWithItems>) {
         _orderList.value = orders
     }
 
@@ -110,9 +113,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _cartList.value = arrayListOf()
     }
 
-    fun addOrder(order: Order) {
+    fun addOrder(order: Order, items: List<Item>) {
+        orderItemList = items
         disposable.add(
             orderRepository.addOrder(order).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::addOrderItems, this::onOrderError)
+        )
+    }
+
+    private fun addOrderItems(orderId: Long) {
+        val relationList = arrayListOf<OrderItemRelation>()
+
+        for (item in orderItemList) {
+            relationList.add(OrderItemRelation(item.itemId, orderId))
+        }
+
+        disposable.add(
+            orderRepository.addItems(relationList).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onAddOrderSuccess, this::onOrderError)
         )
