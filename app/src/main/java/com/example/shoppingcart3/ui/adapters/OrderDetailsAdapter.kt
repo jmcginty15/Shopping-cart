@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingcart3.R
 import com.example.shoppingcart3.data.entities.Item
 import com.example.shoppingcart3.data.entities.OrderWithItems
-import com.example.shoppingcart3.databinding.CartItemBinding
+import com.example.shoppingcart3.databinding.OrderDetailsItemBinding
 
 class OrderDetailsAdapter(order: OrderWithItems) :
     RecyclerView.Adapter<OrderDetailsAdapter.OrderDetailsViewHolder>() {
@@ -17,7 +17,7 @@ class OrderDetailsAdapter(order: OrderWithItems) :
         viewType: Int
     ): OrderDetailsViewHolder =
         OrderDetailsViewHolder(
-            CartItemBinding.inflate(
+            OrderDetailsItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -31,7 +31,7 @@ class OrderDetailsAdapter(order: OrderWithItems) :
 
     override fun getItemCount(): Int = itemList.size
 
-    class OrderDetailsViewHolder(private val binding: CartItemBinding) :
+    class OrderDetailsViewHolder(private val binding: OrderDetailsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun loadData(orderItem: Item) = with(binding) {
             itemName.text = orderItem.name
