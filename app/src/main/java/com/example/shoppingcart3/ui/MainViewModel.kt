@@ -16,10 +16,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val db = StoreDatabase.getDatabase(application)
     private val disposable = CompositeDisposable()
-    private var itemRepository: ItemRepository = ItemRepository(db.itemDao())
-    private var orderRepository: OrderRepository = OrderRepository(db.orderDao(), db.relationDao())
+    private var itemRepository: ItemRepository = ItemRepository(application)
+    private var orderRepository: OrderRepository = OrderRepository(application)
     private var orderItemList = listOf<Item>()
     lateinit var displayedOrder: OrderWithItems
 

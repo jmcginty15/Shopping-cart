@@ -20,6 +20,12 @@ abstract class StoreDatabase : RoomDatabase() {
         private var INSTANCE: StoreDatabase? = null
 
         fun getDatabase(context: Context): StoreDatabase {
+//            val database: StoreDatabase by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+//                Room.databaseBuilder(context, StoreDatabase::class.java, "store_database").addMigrations(
+//                    MIGRATION_1_2, MIGRATION_2_3).build()
+//            }
+//            return database
+
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
